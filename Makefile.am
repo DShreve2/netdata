@@ -302,6 +302,8 @@ EBPF_PLUGIN_FILES = \
     collectors/ebpf.plugin/ebpf_filesystem.h \
     collectors/ebpf.plugin/ebpf_hardirq.c \
     collectors/ebpf.plugin/ebpf_hardirq.h \
+    collectors/ebpf.plugin/ebpf_mdflush.c \
+    collectors/ebpf.plugin/ebpf_mdflush.h \
     collectors/ebpf.plugin/ebpf_mount.c \
     collectors/ebpf.plugin/ebpf_mount.h \
     collectors/ebpf.plugin/ebpf_oomkill.c \
@@ -1088,6 +1090,11 @@ if ENABLE_UNITTESTS
         $(NULL)
 
     TESTS = $(check_PROGRAMS)
+
+    XFAIL_TESTS = \
+        web/api/tests/web_api_testdriver \
+        web/api/tests/valid_urls_testdriver \
+        $(NULL)
 
     web_api_tests_valid_urls_testdriver_LDFLAGS = \
         -Wl,--wrap=rrdhost_find_by_hostname \

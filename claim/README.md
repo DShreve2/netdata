@@ -156,7 +156,8 @@ docker run -d --name=netdata \
   -e NETDATA_CLAIM_PROXY=PROXY \
  netdata/netdata
 ```
->Note: This command only works for connecting a new container. If you are claiming an existing container that can not be recreated, 
+>Note: This command is suggested for connecting a new container. Using this command for an existing container recreates the container, though data 
+and configuration of the old container may be preserved.  If you are claiming an existing container that can not be recreated, 
 you can add the container by going to Netdata Cloud, clicking the **Nodes** tab, clicking **Connect Nodes**, selecting **Docker**, and following
 the instructions and commands provided or by following the instructions in an [empty War Room](#empty-war-room). 
 
@@ -216,8 +217,7 @@ Connect a _running Netdata Agent container_, where you don't want to recreate th
 ```bash
 docker exec -it netdata netdata-claim.sh -token=TOKEN -rooms=ROOM1,ROOM2 -url=https://app.netdata.cloud
 ```
-The values for `ROOM1,ROOM2` can be found by by going to Netdata Cloud, clicking the **Nodes** tab, clicking **Connect Nodes**, selecting **Docker**, and following
-the copying the `rooms=` value in the command provided. 
+The values for `ROOM1,ROOM2` can be found by by going to Netdata Cloud, clicking the **Nodes** tab, clicking **Connect Nodes**, selecting **Docker**, and copying the `rooms=` value in the command provided. 
 
 The script should return `Agent was successfully claimed.`. If the connection process returns errors, or if
 you don't see the node in your Space after 60 seconds, see the [troubleshooting information](#troubleshooting).
@@ -420,7 +420,7 @@ sudo rm -rf cloud.d/
 This node no longer has access to the credentials it was used when connecting to Netdata Cloud via the ACLK.
 You will still be able to see this node in your War Rooms in an **unreachable** state.
 
-If you want to reconnect this node into a different Space, you need to create a new identity by adding `-id=$(uuidgen)` to
+If you want to reconnect this node, you need to create a new identity by adding `-id=$(uuidgen)` to
 the claiming script parameters (not yet supported on the kickstart script). Make sure that you have the `uuidgen-runtime` package installed, as it is used to run the command `uuidgen`. For example:
 
 **Claiming script**
